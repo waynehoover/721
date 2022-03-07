@@ -4,6 +4,9 @@
 // This is all from https://etherscan.io/address/0x5180db8f5c931aae63c74266b211f580155ecac8#code with known bugs removed
 // removed references to witches for Nfts
 
+// Bugs fixed as explained here https://docs.google.com/presentation/d/1oaDvvEe3HxEdbR3MMxx9KlS-XlZfIRFsZvWudPsahxw/edit#slide=id.g1165d06213a_0_123
+// and here https://cryptocoven.mirror.xyz/0eZ0tjudMU0ByeXLlRtPzDqxGzMMZw6ldzf-HfYETW0
+
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -151,7 +154,7 @@ contract CryptoCoven is ERC721, IERC2981, Ownable, ReentrancyGuard {
         uint256 numAlreadyMinted = communityMintCounts[msg.sender];
 
         require(
-            numAlreadyMinted + numberOfTokens <= MAX_Nfts_PER_WALLET,
+            numAlreadyMinted + numberOfTokens <= MAX_NFTS_PER_WALLET,
             "Max Nfts to mint in community sale is three"
         );
 
@@ -269,24 +272,6 @@ contract CryptoCoven is ERC721, IERC2981, Ownable, ReentrancyGuard {
     function withdrawTokens(IERC20 token) public onlyOwner {
         uint256 balance = token.balanceOf(address(this));
         token.transfer(msg.sender, balance);
-    }
-
-    function rollOverNfts(address[] calldata addresses)
-        external
-        nonReentrant
-        onlyOwner
-    {
-        require(
-            tokenCounter.current() + addresses.length <= 128,
-            "All Nfts are already rolled over"
-        );
-
-        for (uint256 i = 0; i < addresses.length; i++) {
-            communityMintCounts[addresses[i]] += 1;
-            // use mint rather than _safeMint here to reduce gas costs
-            // and prevent this from failing in case of grief attempts
-            _mint(addresses[i], nextTokenId());
-        }
     }
 
     // ============ SUPPORTING FUNCTIONS ============
