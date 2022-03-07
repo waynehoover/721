@@ -1,12 +1,6 @@
 //SPDX-License-Identifier: MIT
 //Contract based on [https://docs.openzeppelin.com/contracts/3.x/erc721](https://docs.openzeppelin.com/contracts/3.x/erc721)
 
-// This is all from https://etherscan.io/address/0x5180db8f5c931aae63c74266b211f580155ecac8#code with known bugs removed
-// removed references to witches for Nfts
-
-// Bugs fixed as explained here https://docs.google.com/presentation/d/1oaDvvEe3HxEdbR3MMxx9KlS-XlZfIRFsZvWudPsahxw/edit#slide=id.g1165d06213a_0_123
-// and here https://cryptocoven.mirror.xyz/0eZ0tjudMU0ByeXLlRtPzDqxGzMMZw6ldzf-HfYETW0
-
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
